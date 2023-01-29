@@ -4,13 +4,13 @@ app = Flask(__name__)
 
 
 @app.route('/movie/<title>')
-def movie_index(title):
+def movie_page(title):
     movie_data = utils.get_movie_by_title(title)
     return jsonify(movie_data)
 
 
 @app.route('/movie/<int:start_year>/to/<int:finish_year>')
-def movies_from_years_index(start_year, finish_year):
+def movies_from_years_page(start_year, finish_year):
     movies_data = utils.get_movies_by_years(start_year, finish_year)
     return jsonify(movies_data)
 
