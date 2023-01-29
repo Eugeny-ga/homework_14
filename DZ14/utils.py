@@ -3,6 +3,8 @@ from flask import jsonify
 
 
 def get_data_from_the_table(query):
+    """Принимает параметры запроса к sql и возвращает данные"""
+
     with sqlite3.connect('netflix.db') as con:
         cur = con.cursor()
         cur.execute(query)
@@ -12,6 +14,8 @@ def get_data_from_the_table(query):
 
 
 def get_movie_by_title(movie_name):
+    """Принимает название фильма и возвращает словарь с данными о нём"""
+
     query = (f"""
                 SELECT title, country, release_year, listed_in, description
                 FROM netflix
@@ -35,6 +39,9 @@ def get_movie_by_title(movie_name):
 
 
 def get_movies_by_years(start_year, finish_year):
+    """ Принимает стартовый год и конечный.
+    Возвращает список словарей с названияит и годами выпуска фильмов."""
+
     if start_year > finish_year:
         return "DATA ERROR"
     query = (f"""
@@ -51,6 +58,9 @@ def get_movies_by_years(start_year, finish_year):
 
 
 def get_movies_by_rating(value):
+    """Принимает рейтинг и возращает список словарей
+    с названиями, рейтингом и описаниями фильмов """
+
     query = """
                 SELECT title, rating, description
                 FROM netflix
@@ -77,6 +87,9 @@ def get_movies_by_rating(value):
     return result
 
 def get_movies_by_genre(genre):
+    """Принимает жанр и возращает список словарей
+        с названиями и описаниями фильмов"""
+
     query = f"""
                 SELECT title, description
                 FROM netflix
@@ -90,6 +103,10 @@ def get_movies_by_genre(genre):
     return result
 
 def get_my_dudes(dude_1, dude_2):
+    """Получает в качестве аргумента имена двух актеров,
+    сохраняет всех актеров из колонки cast и возвращает список тех,
+    кто играет с ними в паре больше 2 раз"""
+
     query = f"""
     SELECT "cast"
     FROM netflix
@@ -117,6 +134,9 @@ def get_my_dudes(dude_1, dude_2):
 
 
 def search_movies(type, release_year, genre):
+    """Получает тип картины (фильм или сериал), год выпуска и ее жанр.
+    Возвращает список названий картин с их описаниями в JSON"""
+
     query = f"""
                 SELECT title, description
                 FROM netflix
