@@ -146,7 +146,7 @@ def search_movies(type, release_year, genre):
                 """
 
     movies_data = get_data_from_the_table(query)
-    return movies_data
+    return jsonify(movies_data)
 
 
 
